@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react';
-import { Store } from '../reducers/types';
 
 const { ipcRenderer } = require('electron');
 
@@ -9,7 +8,7 @@ type AppState = {
 };
 
 class App extends Component<{}, AppState> {
-  constructor(props: Store) {
+  constructor(props: {}) {
     super(props);
     this.state = { msg: '' };
   }

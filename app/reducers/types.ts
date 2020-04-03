@@ -4,6 +4,10 @@ export type counterStateType = {
   counter: number;
 };
 
+export type appStateType = {
+  loading: boolean;
+};
+
 export type GetState = () => counterStateType;
 
 export type Dispatch = ReduxDispatch<Action<string>>;
