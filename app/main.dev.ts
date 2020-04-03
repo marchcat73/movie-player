@@ -9,7 +9,8 @@
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow } from 'electron';
+import fs from 'fs';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -114,4 +115,16 @@ app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow();
+});
+
+// MoviePlayer compiled
+const MOVIES_PATH = path.join(__dirname, `../resources/movies`);
+let categories;
+
+ipcMain.on('categories:get', () => {
+  fs.readdir(MOVIES_PATH, (_err, items) => {
+    categories = items;
+    console.log(categories);
+    mainWindow?.webContents.send('categories:list', categories);
+  });
 });
