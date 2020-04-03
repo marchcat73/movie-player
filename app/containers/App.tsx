@@ -1,10 +1,26 @@
-import React, { ReactNode } from 'react';
+import React, { Component } from 'react';
+import { Store } from '../reducers/types';
 
-type Props = {
-  children: ReactNode;
+type AppState = {
+  msg: string;
 };
 
-export default function App(props: Props) {
-  const { children } = props;
-  return <>{children}</>;
+class App extends Component<{}, AppState> {
+  constructor(props: Store) {
+    super(props);
+    this.state = { msg: '' };
+  }
+
+  render() {
+    const { msg } = this.state;
+
+    return (
+      <div>
+        <h1>Welcom</h1>
+        <p>{msg}</p>
+      </div>
+    );
+  }
 }
+
+export default App;
