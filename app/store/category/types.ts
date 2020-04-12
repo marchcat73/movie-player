@@ -13,7 +13,10 @@ interface StartFetchingCategoryAction {
 
 export interface CategoryActionTypes {
   type: string;
-  payload: string[];
+  payload: string[] | null;
 }
 
-export type CategoryTypes = CategoryActionTypes | StartFetchingCategoryAction;
+export type CategoryTypes =
+  | CategoryActionTypes
+  | StartFetchingCategoryAction
+  | CategoryState;

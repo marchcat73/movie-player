@@ -124,7 +124,6 @@ let categories;
 ipcMain.on('categories:get', () => {
   fs.readdir(MOVIES_PATH, (_err, items) => {
     categories = items;
-    console.log(categories);
     mainWindow?.webContents.send('categories:list', categories);
   });
 });
