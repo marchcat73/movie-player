@@ -1,10 +1,12 @@
-/* eslint-disable no-alert */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BounceLoader } from 'react-spinners';
 import * as categoryActions from '../../store/category/actions';
 import { AppState } from '../../store/index';
+
+import styles from './Category.css';
+
+const { ipcRenderer } = window.require('electron');
 
 type Props = {
   startFetchingCategories: () => void;
@@ -37,7 +39,16 @@ class Category extends Component<Props> {
         </div>
         {categories.map((item, i) => (
           <div key={`${i + item}`}>
-            <div onClick={() => alert(item)} role="menuitem" tabIndex={-1}>
+            <div
+              className={styles.menuItem}
+              onClick={() => {
+                ipcRenderer.send('movies:get', {
+                  categoryId: i,
+                  page: 1
+                });
+              }}
+              role="presentation"
+            >
               {item}
             </div>
           </div>

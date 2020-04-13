@@ -119,11 +119,34 @@ app.on('activate', () => {
 
 // MoviePlayer compiled
 const MOVIES_PATH = path.join(__dirname, `../resources/movies`);
-let categories;
+const PAGINATION_STEP = 12;
+let categories: string[] = [];
 
 ipcMain.on('categories:get', () => {
   fs.readdir(MOVIES_PATH, (_err, items) => {
     categories = items;
     mainWindow?.webContents.send('categories:list', categories);
+  });
+});
+
+ipcMain.on('movies:get', (_event, { categoryId, page }) => {
+  const CATEGORY_FOLDER_NAME = categories[categoryId];
+  const CATEGORY_FOLDER = `/movies/${CATEGORY_FOLDER_NAME}`;
+  const POSTERS_FOLDER = path.join(MOVIES_PATH, CATEGORY_FOLDER_NAME, 'image');
+
+  fs.readdir(POSTERS_FOLDER, (_err, items) => {
+    const length = items ? items.length : 0;
+    const maxPage = Math.ceil(length / PAGINATION_STEP);
+    const movies = items
+      ? items.slice((page - 1) * PAGINATION_STEP, page * PAGINATION_STEP)
+      : null;
+    if (mainWindow !== null) {
+      mainWindow.webContents.send('movies:list', {
+        movies,
+        maxPage,
+        CATEGORY_FOLDER
+      });
+      console.log(movies);
+    }
   });
 });
