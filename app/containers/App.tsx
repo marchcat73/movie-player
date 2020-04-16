@@ -1,21 +1,18 @@
 /* eslint-disable no-console */
-import React, { Component } from 'react';
-import Category from '../components/Category';
+import React from 'react';
+import { Category, Movie } from '../components';
 
-const { ipcRenderer } = require('electron');
-
-class App extends Component<{}, {}> {
-  onButtonClick = () => {
-    ipcRenderer.send('categories:get');
-  };
-
-  render() {
-    return (
+const App = () => {
+  return (
+    <div>
       <div>
         <Category />
       </div>
-    );
-  }
-}
+      <div>
+        <Movie />
+      </div>
+    </div>
+  );
+};
 
 export default App;

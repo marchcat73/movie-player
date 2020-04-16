@@ -3,12 +3,13 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { categoryReducer } from './category/reducers';
+import { movieReducer } from './movie/reducers';
 
 const rootReducer = combineReducers({
-  category: categoryReducer
+  category: categoryReducer,
+  movie: movieReducer
 });
 
-// export type AppState = ReturnType<typeof rootReducer>;
 export type AppState = ReturnType<typeof rootReducer>;
 
 export default function configureStore() {

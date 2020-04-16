@@ -131,7 +131,7 @@ ipcMain.on('categories:get', () => {
 
 ipcMain.on('movies:get', (_event, { categoryId, page }) => {
   const CATEGORY_FOLDER_NAME = categories[categoryId];
-  const CATEGORY_FOLDER = `/movies/${CATEGORY_FOLDER_NAME}`;
+  const CATEGORY_FOLDER = path.join(MOVIES_PATH, CATEGORY_FOLDER_NAME);
   const POSTERS_FOLDER = path.join(MOVIES_PATH, CATEGORY_FOLDER_NAME, 'image');
 
   fs.readdir(POSTERS_FOLDER, (_err, items) => {
@@ -146,7 +146,7 @@ ipcMain.on('movies:get', (_event, { categoryId, page }) => {
         maxPage,
         CATEGORY_FOLDER
       });
-      console.log(movies);
+      console.log(MOVIES_PATH);
     }
   });
 });
